@@ -423,20 +423,20 @@ config ARCH_BOARD_FRANZININHO_WIFI
 
 config ARCH_BOARD_ESP32S3_DEVKIT
 	bool "Espressif ESP32-S3 DevKit"
-	depends on ARCH_CHIP_ESP32S3WROOM1 || ARCH_CHIP_ESP32S3MINI1 || ARCH_CHIP_ESP32S3WROOM2 || ARCH_CHIP_ESP32S3WROOM2_32M
+	depends on ARCH_CHIP_ESP32S3WROOM1N4 || ARCH_CHIP_ESP32S3MINI1N8 || ARCH_CHIP_ESP32S3WROOM2N16R8V || ARCH_CHIP_ESP32S3WROOM2N32R8V || ARCH_CHIP_ESP32S3CUSTOM
 	select ARCH_HAVE_LEDS
 	select ARCH_HAVE_BUTTONS
 	select ARCH_HAVE_IRQBUTTONS if ESP32S3_GPIO_IRQ
 	---help---
 		The ESP32-S3 DevKit features the ESP32-S3 CPU with dual Xtensa LX7 cores.
 		It comes in two flavors, the ESP32-S3-DevKitM-1 and the ESP32-S3-DevKitC-1.
-		The ESP32-C3-DevKitM-1 version contains the ESP32-S3-MINI-1/1U module and the
+		The ESP32-S3-DevKitM-1 version contains the ESP32-S3-MINI-1/1U module and the
 		ESP32-S3-DevKitC-1 version may be based either on ESP32-S3-WROOM-1/1U or
 		ESP32-S3-WROOM-2/2U.
 
 config ARCH_BOARD_ESP32S3_EYE
 	bool "Espressif ESP32-S3-EYE Board"
-	depends on ARCH_CHIP_ESP32S3WROOM1
+	depends on ARCH_CHIP_ESP32S3WROOM1N4 || ARCH_CHIP_ESP32S3CUSTOM
 	select ARCH_HAVE_LEDS
 	select ARCH_HAVE_BUTTONS
 	select ARCH_HAVE_IRQBUTTONS if ESP32S3_GPIO_IRQ
@@ -447,7 +447,7 @@ config ARCH_BOARD_ESP32S3_EYE
 
 config ARCH_BOARD_ESP32S3_LCD_EV
 	bool "Espressif ESP32-S3-LCD-EV Board"
-	depends on ARCH_CHIP_ESP32S3WROOM2 || ARCH_CHIP_ESP32S3WROOM2_32M
+	depends on ARCH_CHIP_ESP32S3WROOM2N16R8V || ARCH_CHIP_ESP32S3WROOM2N32R8V || ARCH_CHIP_ESP32S3CUSTOM
 	select ARCH_HAVE_LEDS
 	select ARCH_HAVE_BUTTONS
 	select ARCH_HAVE_IRQBUTTONS if ESP32S3_GPIO_IRQ
@@ -465,7 +465,7 @@ config ARCH_BOARD_ESP32S3_LCD_EV
 
 config ARCH_BOARD_ESP32S3_BOX
 	bool "Espressif ESP32-S3-BOX"
-	depends on ARCH_CHIP_ESP32S3WROOM2 || ARCH_CHIP_ESP32S3WROOM2_32M
+	depends on ARCH_CHIP_ESP32S3WROOM2N16R8V || ARCH_CHIP_ESP32S3WROOM2N32R8V || ARCH_CHIP_ESP32S3CUSTOM
 	select ARCH_HAVE_LEDS
 	select ARCH_HAVE_BUTTONS
 	select ARCH_HAVE_IRQBUTTONS if ESP32S3_GPIO_IRQ
@@ -479,7 +479,7 @@ config ARCH_BOARD_ESP32S3_BOX
 
 config ARCH_BOARD_ESP32S3_MEADOW
 	bool "WildernessLabs ESP32S3-Meadow Board"
-	depends on ARCH_CHIP_ESP32S3WROOM1
+	depends on ARCH_CHIP_ESP32S3WROOM1N4 || ARCH_CHIP_ESP32S3CUSTOM
 	select ARCH_HAVE_LEDS
 	select ARCH_HAVE_BUTTONS
 	select ARCH_HAVE_IRQBUTTONS if ESP32S3_GPIO_IRQ
@@ -2007,6 +2007,13 @@ config ARCH_BOARD_BL808_OX64
 		This options selects support for NuttX on PINE64 Ox64 based
 		on Bouffalo Lab BL808 SoC.
 
+config ARCH_BOARD_SG2000_MILKV_DUOS
+	bool "Milk-V Duo S"
+	depends on ARCH_CHIP_SG2000
+	---help---
+		This options selects support for NuttX on Milk-V Duo S based
+		on SOPHGO SG2000 SoC.
+
 config ARCH_BOARD_S32K118EVB
 	bool "NXP S32K118EVB"
 	depends on ARCH_CHIP_S32K118
@@ -3070,6 +3077,13 @@ config ARCH_BOARD_HPM6750EVK2
 		This is the board configuration for the port of NuttX to the Hpmicro hpm6750evk2
 		board.  This board features the RISC-V hpm6750.
 
+config ARCH_BOARD_TRINITAEVK
+	bool "Unolab trinitaevk"
+	depends on ARCH_CHIP_TRINITA
+	---help---
+		This is the board configuration for the port of NuttX to the Unolab trinitaevk
+		board.  This board features the RISC-V trinita.
+
 config ARCH_BOARD_SIM
 	bool "User mode simulation"
 	select ARCH_HAVE_BUTTONS
@@ -3477,6 +3491,7 @@ config ARCH_BOARD
 	default "s698pm-dkit"               if ARCH_BOARD_S698PM_DKIT
 	default "hpm6360evk"                if ARCH_BOARD_HPM6360EVK
 	default "hpm6750evk2"               if ARCH_BOARD_HPM6750EVK2
+	default "trinitaevk"                if ARCH_BOARD_TRINITAEVK
 	default "at32f437-mini"             if ARCH_BOARD_AT32F437_MINI
 
 comment "Common Board Options"
@@ -4451,6 +4466,9 @@ source "boards/risc-v/hpm6000/hpm6360evk/Kconfig"
 endif
 if ARCH_BOARD_HPM6750EVK2
 source "boards/risc-v/hpm6750/hpm6750evk2/Kconfig"
+endif
+if ARCH_BOARD_TRINITAEVK
+source "boards/risc-v/trinita/trinitaevk/Kconfig"
 endif
 if ARCH_BOARD_AT32F437_MINI
 source "boards/arm/at32/at32f437-mini/Kconfig"
